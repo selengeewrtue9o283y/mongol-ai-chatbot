@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Монгол AI Туслагч</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mongolian&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ── Sidebar ─────────────────────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🤖</span>
+    <span class="logo-text">Монгол AI</span>
+  </div>
+
+  <button class="new-chat-btn" id="clearBtn">
+    <span>✦</span> Шинэ яриа эхлэх
+  </button>
+
+  <div class="sidebar-section">
+    <p class="sidebar-label">Боломжууд</p>
+    <div class="sidebar-item active">💬 Ярилцлага</div>
+    <div class="sidebar-item">📚 Мэдлэг</div>
+    <div class="sidebar-item">🇲🇳 Монгол хэл</div>
+  </div>
+
+  <div class="sidebar-footer">
+    <p>Монгол хэлтэй AI туслагч</p>
+    <p class="version">v1.0 • Offline горим</p>
+  </div>
+</aside>
+
+<!-- ── Main ────────────────────────────────────────────────────────────────── -->
+<main class="main">
+
+  <!-- Header -->
+  <header class="top-bar">
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <div class="top-bar-center">
+      <span class="model-badge">🧠 paraphrase-multilingual-MiniLM</span>
+    </div>
+    <button class="clear-mobile-btn" id="clearMobile">🗑️</button>
+  </header>
+
+  <!-- Chat messages area -->
+  <div class="chat-area" id="chatArea">
+
+    <!-- Welcome message shown when no history -->
+    {% if not history %}
+    <div class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-icon">🤖</div>
+      <h1 class="welcome-title">Монгол AI Туслагч</h1>
+      <div class="suggestion-chips">
+        <button class="chip" onclick="sendChip('Сайн уу!')">Сайн уу!</button>
+        <button class="chip" onclick="sendChip('Python гэж юу вэ?')">Python гэж юу вэ?</button>
+        <button class="chip" onclick="sendChip('Амжилтын нууц юу вэ?')">Амжилтын нууц юу вэ?</button>
+        <button class="chip" onclick="sendChip('Монгол улсын тухай хэлж өг')">Монгол улс</button>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Load history from server -->
+    {% for user_msg, bot_resp, ts in history %}
+    <div class="message-pair">
+      <div class="message user-msg">
+        <div class="bubble user-bubble">{{ user_msg }}</div>
+        <span class="msg-time">{{ ts }}</span>
+      </div>
+      <div class="message ai-msg">
+        <div class="ai-avatar">🤖</div>
+        <div class="bubble ai-bubble">{{ bot_resp }}</div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div><!-- /chat-area -->
+
+  <!-- Input bar -->
+  <div class="input-bar-wrapper">
+    <div class="input-bar">
+      <textarea
+        id="userInput"
+        class="input-textarea"
+        placeholder="Монголоор, эсвэл ямар ч хэлээр асуугаарай..."
+        rows="1"
+        maxlength="500"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" title="Илгээх">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <p class="input-hint">Enter → илгээх &nbsp;|&nbsp; Shift+Enter → шинэ мөр</p>
+  </div>
+
+</main>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
